@@ -30,6 +30,7 @@ jobs:
           cp ./profiles.yml /root/.dbt/profiles.yml
 
       - name: Install dependencies
+        run: |
           dbt deps
           dbt compile
 

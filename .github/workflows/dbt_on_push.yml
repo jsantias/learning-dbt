@@ -28,7 +28,7 @@ jobs:
       - name: Set dbt profile
         run: |
           pwd
-          cp ./profiles.yml /root/.dbt/
+          cp ./profiles.yml ~/.dbt/
 
       - name: Install dependencies
         run: |

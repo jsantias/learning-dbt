@@ -1,0 +1,46 @@
+name: dbt_job
+on:
+  push:
+    branches:
+      # run on push to development branch
+      - main
+
+env:
+  CONNECTION_TYPE: snowflake
+  DB_HOST: ${{ secrets.DB_HOST }}
+  DB_USER: ${{ secrets.DB_USER }}
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  DB_NAME: ${{ secrets.DB_NAME }}
+  DB_SCHEMA: ${{ secrets.DB_SCHEMA }}
+  DB_ROLE: ${{ secrets.DB_ROLE }}
+
+jobs:
+  dbt_job:
+    name: dbt_job
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/dbt-labs/dbt-snowflake:1.3.0
+      volumes:
+        - ./:/usr/app/dbt
+        - ./profiles.yml:/root/.dbt.profiles.yml
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-python@v1
+        with:
+          python-version: "3.7.x"
+
+      - name: Install dbt and its dependencies
+        run: |
+          pip install dbt
+          dbt deps
+          dbt compile
+
+      - name: Run dbt seed
+        run: dbt seed
+
+      - name: Run dbt test
+        run: dbt test
+      
+      - name: Run dbt test
+        run: dbt run

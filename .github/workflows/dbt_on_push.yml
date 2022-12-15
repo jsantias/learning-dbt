@@ -16,8 +16,8 @@ env:
   DB_ROLE: ${{ secrets.DB_ROLE }}
 
 jobs:
-  dbt_on_push:
-    name: dbt_on_push
+  dbt_job:
+    name: dbt_job
     runs-on: ubuntu-latest
       
     steps:
@@ -44,5 +44,5 @@ jobs:
       - name: Run dbt test
         run: dbt test
       
-      - name: Run dbt test
+      - name: Run dbt run
         run: dbt run

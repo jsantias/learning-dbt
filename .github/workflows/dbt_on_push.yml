@@ -1,9 +1,10 @@
-name: dbt_job
+name: dbt_on_push
 on:
   push:
     branches:
       # run on push to development branch
       - main
+      - release/**
 
 env:
   CONNECTION_TYPE: snowflake
@@ -15,8 +16,8 @@ env:
   DB_ROLE: ${{ secrets.DB_ROLE }}
 
 jobs:
-  dbt_job:
-    name: dbt_job
+  dbt_on_push:
+    name: dbt_on_push
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/dbt-labs/dbt-snowflake:1.3.0

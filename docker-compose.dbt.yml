@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  dbt:
+    container_name: dbt-core
+    # image: ghcr.io/dbt-labs/dbt-snowflake:1.3.0
+    build: .
+    volumes:
+      - ./:/usr/app/dbt
+      - ./profiles.yml:/root/.dbt/profiles.yml
+    # entrypoint:
+    #   - bash
+    env_file:
+      - .env
+    stdin_open: true # docker run -i
+    tty: true 
